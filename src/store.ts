@@ -3,7 +3,7 @@ import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {generateHash, shuffleArray} from './utils.js';
 import {playSuccessAudio, playWrongAudio} from './assets/assets.js';
 import {hasSomeJapanese} from 'asian-regexps';
-import {playJapanese} from '@vdegenne/speech';
+import {playJapanese, speakFrench} from '@vdegenne/speech';
 
 export enum State {
 	NODATA,
@@ -77,6 +77,8 @@ export class AppStore extends ReactiveController {
 		shuffleArray(finalQuestion);
 
 		this.question = finalQuestion;
+
+		speakFrench(this.answer[1]);
 	};
 
 	checkAnswer(answer: string) {

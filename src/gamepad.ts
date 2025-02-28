@@ -1,44 +1,17 @@
-import gamectrl, {type GCGamepad, XBoxButton} from 'esm-gamecontroller.js';
+import gamectrl, {
+	getMode,
+	Modes,
+	setStateGamepad,
+	XBoxButton,
+} from 'esm-gamecontroller.js';
+import {cquerySelector} from 'html-vision';
+import {store} from './store.js';
+import {app} from './app-shell/app-shell.js';
+import {googleImagesOpen, jishoOpen} from '@vdegenne/links';
+import {playJapanese} from '@vdegenne/speech';
 
-export enum Modes {
-	NORMAL = 0,
-	PRIMARY = 1,
-	SECONDARY = 2,
-	TERTIARY = 3,
-}
-
-export function getMode() {
-	if (isNormal()) {
-		return Modes.NORMAL;
-	}
-	if (isPrimary()) {
-		return Modes.PRIMARY;
-	}
-	if (isSecondary()) {
-		return Modes.SECONDARY;
-	}
-	if (isTertiary()) {
-		return Modes.TERTIARY;
-	}
-}
-
-let _gamepad: GCGamepad;
-
-export function isNormal() {
-	return !_gamepad.pressed.button6 && !_gamepad.pressed.button7;
-	// return !modifiers.LT && modifiers.RT;
-}
-export function isPrimary() {
-	return _gamepad.pressed.button6 && !_gamepad.pressed.button7;
-	// return !modifiers.LT && modifiers.RT;
-}
-export function isSecondary() {
-	return !_gamepad.pressed.button6 && _gamepad.pressed.button7;
-	// return !modifiers.LT && modifiers.RT;
-}
-export function isTertiary() {
-	return _gamepad.pressed.button6 && _gamepad.pressed.button7;
-	// return modifiers.LT && modifiers.RT;
+function getButtonElement(button: XBoxButton) {
+	return cquerySelector(`[gp-button="${button}"]`);
 }
 
 function shouldNotExecute() {
@@ -51,6 +24,7 @@ function shouldNotExecute() {
 	}
 	return false;
 }
+
 function guard(callback: Function) {
 	return function () {
 		if (shouldNotExecute()) {
@@ -61,15 +35,104 @@ function guard(callback: Function) {
 }
 
 gamectrl.on('connect', async (gamepad) => {
-	gamepad.on(
+	setStateGamepad(gamepad);
+	gamepad.before(
+		XBoxButton.A,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.A);
+					button?.click();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
 		XBoxButton.B,
 		guard(() => {
 			const mode = getMode();
 			switch (mode) {
 				case Modes.NORMAL:
-					// do something
+					const button = getButtonElement(XBoxButton.B);
+					button?.click();
 					break;
 			}
-		})
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.X,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.X);
+					button?.click();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.Y,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.Y);
+					button?.click();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.RIGHT_BUMPER,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					store.newQuestion();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.DPAD_RIGHT,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					jishoOpen(app.selectedItemContent);
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.DPAD_DOWN,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					googleImagesOpen(app.selectedItemContent);
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.LEFT_BUMPER,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					playJapanese(app.selectedItemContent);
+					break;
+			}
+		}),
 	);
 });

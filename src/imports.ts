@@ -7,3 +7,8 @@ export async function getSettingsDialog() {
 	const {settingsDialog} = await import('./settings/settings-dialog.js');
 	return settingsDialog;
 }
+
+export async function openSettingsDialog() {
+	const dialog = await getSettingsDialog();
+	dialog.show();
+}

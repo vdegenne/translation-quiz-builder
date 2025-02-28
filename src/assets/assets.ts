@@ -6,14 +6,14 @@ import {html} from 'lit';
 
 import successSrc from '/audio/success.mp3';
 const AUDIO_SUCCESS = new Audio(successSrc);
-AUDIO_SUCCESS.volume = 0.5;
+AUDIO_SUCCESS.volume = 0.4;
 export function playSuccessAudio() {
 	AUDIO_SUCCESS.currentTime = 0;
 	AUDIO_SUCCESS.play();
 }
 import wrongSrc from '/audio/wrong.mp3';
 const AUDIO_WRONG = new Audio(wrongSrc);
-AUDIO_WRONG.volume = 0.5;
+AUDIO_WRONG.volume = 0.4;
 export function playWrongAudio() {
 	AUDIO_WRONG.currentTime = 0;
 	AUDIO_WRONG.play();
