@@ -18,6 +18,8 @@
     "@vdegenne/material-color-helpers": "^1.11.0",
     "@vdegenne/mini-rest": "^0.1.5",
     "@vdegenne/rollup-plugin-minify-html": "^1.0.6",
+    "@vdegenne/speech": "^0.5.0",
+    "asian-regexps": "^5.1.0",
     "custom-element-decorator": "^0.6.0",
     "lit": "^3.2.1",
     "lit-with-styles": "^2.1.3",

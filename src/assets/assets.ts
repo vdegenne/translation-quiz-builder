@@ -4,13 +4,20 @@ import {html} from 'lit';
 // export {default as MY_IMAGE} from './img/my-image.png?inline';
 // etc...
 
-// import successSrc from '/audio/success.mp3';
-// console.log(successSrc);
-// const AUDIO_SUCCESS = new Audio(successSrc);
-// export function playSuccessAudio() {
-// 	AUDIO_SUCCESS.currentTime = 0;
-// 	AUDIO_SUCCESS.play();
-// }
+import successSrc from '/audio/success.mp3';
+const AUDIO_SUCCESS = new Audio(successSrc);
+AUDIO_SUCCESS.volume = 0.5;
+export function playSuccessAudio() {
+	AUDIO_SUCCESS.currentTime = 0;
+	AUDIO_SUCCESS.play();
+}
+import wrongSrc from '/audio/wrong.mp3';
+const AUDIO_WRONG = new Audio(wrongSrc);
+AUDIO_WRONG.volume = 0.5;
+export function playWrongAudio() {
+	AUDIO_WRONG.currentTime = 0;
+	AUDIO_WRONG.play();
+}
 
 // Use "?inline" in the url to inline the resource.
 // Note:

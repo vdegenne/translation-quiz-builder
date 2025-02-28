@@ -64,7 +64,7 @@ export function getElementsTree(node: Element): Promise<Element[]> {
 }
 export async function getElementInTree(
 	from: Element,
-	condition: (element: Element) => boolean
+	condition: (element: Element) => boolean,
 ): Promise<Element | undefined> {
 	for (const element of await getElementsTree(from)) {
 		if (condition(element)) {
@@ -73,10 +73,20 @@ export async function getElementInTree(
 	}
 }
 
-export function shuffleArray<T>(array: T[]): T[] {
+/**
+ * Shuffle the array in place.
+ */
+export function shuffleArray<T>(array: T[]) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]]; // Swap elements
 	}
-	return array;
+}
+
+export async function generateHash(input: string): Promise<string> {
+	const encoder = new TextEncoder();
+	const data = encoder.encode(input);
+	const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
