@@ -59,14 +59,14 @@ export class AppShell extends LitElement {
 
 						<div class="flex flex-col items-center justify-center gap-4">
 							<div>
-								${this.#renderButton(store.question[0][0], XBoxButton.UP)}
+								${this.#renderButton(store.question[0]?.[0], XBoxButton.UP)}
 							</div>
 							<div class="w-full flex items-center justify-evenly">
-								${this.#renderButton(store.question[1][0], XBoxButton.LEFT)}
-								${this.#renderButton(store.question[2][0], XBoxButton.RIGHT)}
+								${this.#renderButton(store.question[1]?.[0], XBoxButton.LEFT)}
+								${this.#renderButton(store.question[2]?.[0], XBoxButton.RIGHT)}
 							</div>
 							<div>
-								${this.#renderButton(store.question[3][0], XBoxButton.DOWN)}
+								${this.#renderButton(store.question[3]?.[0], XBoxButton.DOWN)}
 							</div>
 						</div>
 					`
