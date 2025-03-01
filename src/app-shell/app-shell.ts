@@ -7,7 +7,7 @@ import {customElement, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {materialShellLoadingOff} from 'material-shell';
-import {openSettingsDialog} from '../imports.js';
+import {openDataVisualiserDialog, openSettingsDialog} from '../imports.js';
 import {State, store} from '../store.js';
 import styles from './app-shell.css?inline';
 
@@ -44,8 +44,11 @@ export class AppShell extends LitElement {
 			${store.state === State.NOQUESTION ? html`Data has no candidates.` : null}
 			${store.state === State.QUESTION || store.state === State.ANSWER
 				? html`
-						<header class="flex m-3">
+						<header class="flex m-4 gap-4">
 							<div class="flex-1"></div>
+							<md-icon-button @click=${openDataVisualiserDialog}>
+								<md-icon>database</md-icon>
+							</md-icon-button>
 							<md-icon-button @click=${openSettingsDialog}>
 								<md-icon>settings</md-icon>
 							</md-icon-button>
@@ -91,7 +94,7 @@ export class AppShell extends LitElement {
 		return html`<!-- -->
 			<md-filled-tonal-button
 				jp
-				class="text-2xl"
+				class="text-3xl"
 				style=${style}
 				@click=${() => store.checkAnswer(answer)}
 				gp-button=${ifDefined(gamepadButton)}

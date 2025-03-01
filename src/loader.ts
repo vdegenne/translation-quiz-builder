@@ -1,8 +1,8 @@
 // This needs to be before anything else
 // because it sets a shared stylesheet used by
 // elements' construtor.
-import './styles/styles.js';
 import './styles/shared.js';
+import './styles/styles.js';
 
 import '@material/web/all.js';
 

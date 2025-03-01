@@ -14,7 +14,7 @@ export enum State {
 	NOQUESTION,
 }
 
-type Entry = [string, string];
+export type Entry = [string, string];
 
 @saveToLocalStorage('translation-quiz-builder:store')
 export class AppStore extends ReactiveController {

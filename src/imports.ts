@@ -12,3 +12,12 @@ export async function openSettingsDialog() {
 	const dialog = await getSettingsDialog();
 	dialog.show();
 }
+
+export async function getDataVisualiserDialog() {
+	const {dataVisualiser} = await import('./data-visualiser/data-visualiser.js');
+	return dataVisualiser;
+}
+export async function openDataVisualiserDialog() {
+	const dialog = await getDataVisualiserDialog();
+	dialog.show();
+}
