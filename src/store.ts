@@ -83,8 +83,10 @@ export class AppStore extends ReactiveController {
 
 	checkAnswer(answer: string) {
 		if (answer === this.answer[0]) {
-			playSuccessAudio();
-			this.state = State.ANSWER;
+			if (this.state !== State.ANSWER) {
+				playSuccessAudio();
+				this.state = State.ANSWER;
+			}
 			if (hasSomeJapanese(answer)) {
 				playJapanese(answer);
 			}

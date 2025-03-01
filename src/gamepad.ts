@@ -35,15 +35,56 @@ function guard(callback: Function) {
 }
 
 gamectrl.on('connect', async (gamepad) => {
+	gamepad.axeThreshold = [0.3];
 	setStateGamepad(gamepad);
+
 	gamepad.before(
-		XBoxButton.A,
+		XBoxButton.LEFT,
 		guard(() => {
 			const mode = getMode();
 			switch (mode) {
 				case Modes.NORMAL:
-					const button = getButtonElement(XBoxButton.A);
-					button?.click();
+					const button = getButtonElement(XBoxButton.LEFT);
+					button.focus();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.RIGHT,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.RIGHT);
+					button.focus();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.UP,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.UP);
+					button.focus();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.DOWN,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					const button = getButtonElement(XBoxButton.DOWN);
+					button.focus();
 					break;
 			}
 		}),
@@ -55,8 +96,7 @@ gamectrl.on('connect', async (gamepad) => {
 			const mode = getMode();
 			switch (mode) {
 				case Modes.NORMAL:
-					const button = getButtonElement(XBoxButton.B);
-					button?.click();
+					app.focusedItem?.click();
 					break;
 			}
 		}),
@@ -64,32 +104,6 @@ gamectrl.on('connect', async (gamepad) => {
 
 	gamepad.before(
 		XBoxButton.X,
-		guard(() => {
-			const mode = getMode();
-			switch (mode) {
-				case Modes.NORMAL:
-					const button = getButtonElement(XBoxButton.X);
-					button?.click();
-					break;
-			}
-		}),
-	);
-
-	gamepad.before(
-		XBoxButton.Y,
-		guard(() => {
-			const mode = getMode();
-			switch (mode) {
-				case Modes.NORMAL:
-					const button = getButtonElement(XBoxButton.Y);
-					button?.click();
-					break;
-			}
-		}),
-	);
-
-	gamepad.before(
-		XBoxButton.RIGHT_BUMPER,
 		guard(() => {
 			const mode = getMode();
 			switch (mode) {
