@@ -103,7 +103,7 @@ gamectrl.on('connect', async (gamepad) => {
 	);
 
 	gamepad.before(
-		XBoxButton.X,
+		XBoxButton.A,
 		guard(() => {
 			const mode = getMode();
 			switch (mode) {
