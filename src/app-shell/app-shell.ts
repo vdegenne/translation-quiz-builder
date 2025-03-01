@@ -83,6 +83,9 @@ export class AppShell extends LitElement {
 	}
 
 	#renderButton(answer: string, gamepadButton: XBoxButton) {
+		if (!answer) {
+			return null;
+		}
 		const goodAnswer =
 			store.state === State.ANSWER && answer === store.answer[0];
 		const style = styleMap({
