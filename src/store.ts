@@ -29,9 +29,9 @@ export class AppStore extends ReactiveController {
 	async firstUpdated() {
 		const hash = window.location.hash.slice(1);
 		if (hash) {
-			this.state = State.LOADING;
 			const realHash = await generateHash(hash);
 			if (realHash !== this.realHash) {
+				this.state = State.LOADING;
 				this.realHash = realHash;
 				this.hashData = hash;
 				try {
@@ -44,7 +44,7 @@ export class AppStore extends ReactiveController {
 					this.state = State.ERROR;
 					return;
 				}
-				location.hash = '';
+				// location.hash = '';
 				this.newQuestion();
 			}
 		}
