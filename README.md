@@ -10,7 +10,6 @@ Append a json object at the end of the URL: https://vdegenne.github.io/translati
 
 For instance if you learn arabic language, you would write:
 
-[https://vdegenne.github.io/translation-quiz-builder/#{"قمر":"moon","كتاب":"book","ماء":"water"}](https://vdegenne.github.io/translation-quiz-builder/#{"قمر":"moon","كتاب":"book","ماء":"water","شمس":"sun"}
-)
+https://vdegenne.github.io/translation-quiz-builder/#{"قمر":"moon","كتاب":"book","ماء":"water","شمس":"sun"}
 
 (click the link to see a demo)
