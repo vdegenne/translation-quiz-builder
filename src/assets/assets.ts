@@ -19,6 +19,14 @@ export function playWrongAudio() {
 	AUDIO_WRONG.play();
 }
 
+import shuffleSrc from '/audio/shuffle.mp3';
+const AUDIO_SHUFFLE = new Audio(shuffleSrc);
+AUDIO_SHUFFLE.volume = 0.5;
+export function playShuffleAudio() {
+	AUDIO_SHUFFLE.currentTime = 0;
+	AUDIO_SHUFFLE.play();
+}
+
 // Use "?inline" in the url to inline the resource.
 // Note:
 // - Assets from public directory can be inlined but a relative path needs to be used (e.g. "../../public/audio/myaudio.mp3")

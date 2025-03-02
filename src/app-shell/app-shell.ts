@@ -35,6 +35,7 @@ export class AppShell extends LitElement {
 	}
 
 	render() {
+		console.log('render');
 		return html`
 			${store.state === State.NODATA ? html`No data found` : null}
 			${store.state === State.LOADING ? html`Loading...` : null}

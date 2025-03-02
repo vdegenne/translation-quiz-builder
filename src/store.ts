@@ -1,7 +1,11 @@
 import {ReactiveController, state} from '@snar/lit';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
 import {generateHash, shuffleArray} from './utils.js';
-import {playSuccessAudio, playWrongAudio} from './assets/assets.js';
+import {
+	playShuffleAudio,
+	playSuccessAudio,
+	playWrongAudio,
+} from './assets/assets.js';
 import {hasSomeJapanese} from 'asian-regexps';
 import {playJapanese, speakFrench} from '@vdegenne/speech';
 
@@ -22,6 +26,7 @@ export class AppStore extends ReactiveController {
 	@state() realHash = '';
 	@state() hashData = '';
 	@state() data: Record<string, string> = {};
+	@state() bag: Entry[] = [];
 	@state() answer: Entry | null = null;
 	@state() otherChoices: Entry[] = [];
 	@state() question: Entry[] = [];
@@ -44,30 +49,38 @@ export class AppStore extends ReactiveController {
 					this.state = State.ERROR;
 					return;
 				}
-				// location.hash = '';
+				this.fillBagAndShuffle();
 				this.newQuestion();
 			}
 		}
 	}
 
+	fillBagAndShuffle() {
+		const bag = Object.entries(this.data);
+		shuffleArray(bag);
+		playShuffleAudio();
+		this.bag = bag;
+	}
+
 	newQuestion = () => {
 		this.state = State.QUESTION;
-		const entries = Object.entries(this.data);
-		let entry: Entry;
-		if (entries.length === 1) {
-			entry = entries[0];
-		} else {
-			let candidate: Entry;
-			do {
-				candidate = entries[Math.floor(Math.random() * entries.length)];
-			} while (this.answer !== null && this.answer[0] === candidate[0]);
-			entry = candidate;
+		if (this.bag.length === 0) {
+			this.fillBagAndShuffle();
 		}
 
-		this.answer = entry;
+		// Pick an (answer) in the bag
+		const answerIndexInTheBag = Math.floor(Math.random() * this.bag.length);
+		const answer = this.bag[answerIndexInTheBag];
+		this.bag = this.bag.filter((_, i) => i !== answerIndexInTheBag);
+		this.answer = answer;
 
-		// Remove the question
-		entries.splice(entries.indexOf(this.answer) >>> 0, 1);
+		// Pick choices (without the answer ofc)
+		const entries = Object.entries(this.data);
+		const answerIndexIntTheData = entries.findIndex(
+			(e) => e[0] === this.answer[0],
+		);
+		entries.splice(answerIndexIntTheData >>> 0, 1);
+
 		// Shuffle
 		shuffleArray(entries);
 

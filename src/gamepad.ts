@@ -1,3 +1,5 @@
+import {googleImagesOpen, jishoOpen} from '@vdegenne/links';
+import {playJapanese} from '@vdegenne/speech';
 import gamectrl, {
 	getMode,
 	Modes,
@@ -5,10 +7,8 @@ import gamectrl, {
 	XBoxButton,
 } from 'esm-gamecontroller.js';
 import {cquerySelector} from 'html-vision';
-import {store} from './store.js';
 import {app} from './app-shell/app-shell.js';
-import {googleImagesOpen, jishoOpen} from '@vdegenne/links';
-import {playJapanese} from '@vdegenne/speech';
+import {store} from './store.js';
 
 function getButtonElement(button: XBoxButton) {
 	return cquerySelector(`[gp-button="${button}"]`);
