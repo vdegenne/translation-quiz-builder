@@ -14,7 +14,6 @@
     "@snar/lit": "^1.6.0",
     "@tailwindcss/postcss": "^4.0.9",
     "@vdegenne/about-dialog": "^0.4.2",
-    "@vdegenne/forms": "^0.0.5",
     "@vdegenne/links": "^1.7.1",
     "@vdegenne/material-color-helpers": "^1.11.0",
     "@vdegenne/mini-rest": "^0.1.5",
