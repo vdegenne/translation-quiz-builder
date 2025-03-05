@@ -107,7 +107,8 @@ export class AppShell extends LitElement {
 			return null;
 		}
 		const goodAnswer =
-			store.state === State.ANSWER && answer === store.answer[0];
+			store.state === State.ANSWER &&
+			answer === (store.reverseMode ? store.answer[1] : store.answer[0]);
 		const style = styleMap({
 			'--md-filled-tonal-button-icon-size': '24px',
 			'--md-sys-color-secondary-container': goodAnswer

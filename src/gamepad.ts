@@ -9,6 +9,7 @@ import gamectrl, {
 import {cquerySelector} from 'html-vision';
 import {app} from './app-shell/app-shell.js';
 import {store} from './store.js';
+import {playAudio} from './utils.js';
 
 function getButtonElement(button: XBoxButton) {
 	return cquerySelector(`[gp-button="${button}"]`);
@@ -144,7 +145,11 @@ gamectrl.on('connect', async (gamepad) => {
 			const mode = getMode();
 			switch (mode) {
 				case Modes.NORMAL:
-					playJapanese(app.selectedItemContent);
+					if (store.reverseMode) {
+						playAudio(store.answer[0]);
+					} else {
+						playAudio(app.selectedItemContent);
+					}
 					break;
 			}
 		}),
