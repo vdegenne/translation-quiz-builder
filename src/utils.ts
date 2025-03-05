@@ -1,3 +1,6 @@
+import {cancelSpeech, playJapanese, speakFrench} from '@vdegenne/speech';
+import {hasSomeJapanese} from 'asian-regexps';
+
 export function copyToClipboard(text: string) {
 	navigator.clipboard.writeText(text);
 	// toastit('Copied to clipboard.')
@@ -89,4 +92,13 @@ export async function generateHash(input: string): Promise<string> {
 	const hashBuffer = await crypto.subtle.digest('SHA-256', data);
 	const hashArray = Array.from(new Uint8Array(hashBuffer));
 	return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+export function playAudio(input: string) {
+	cancelSpeech();
+	if (hasSomeJapanese(input)) {
+		playJapanese(input);
+	} else {
+		speakFrench(input);
+	}
 }

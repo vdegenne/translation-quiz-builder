@@ -36,6 +36,8 @@ export class AppShell extends LitElement {
 
 	render() {
 		console.log('render');
+		const questionIndex = store.reverseMode ? 0 : 1;
+		const answersIndex = store.reverseMode ? 1 : 0;
 		return html`
 			${store.state === State.NODATA ? html`No data found` : null}
 			${store.state === State.LOADING ? html`Loading...` : null}
@@ -55,19 +57,31 @@ export class AppShell extends LitElement {
 							</md-icon-button>
 						</header>
 						<div class="flex items-center justify-center m-16 mb-24 text-3xl">
-							${store.answer[1]}
+							${store.answer[questionIndex]}
 						</div>
 
 						<div class="flex flex-col items-center justify-center gap-4">
 							<div>
-								${this.#renderButton(store.question[0]?.[0], XBoxButton.UP)}
+								${this.#renderButton(
+									store.question[0]?.[answersIndex],
+									XBoxButton.UP,
+								)}
 							</div>
 							<div class="w-full flex items-center justify-evenly">
-								${this.#renderButton(store.question[1]?.[0], XBoxButton.LEFT)}
-								${this.#renderButton(store.question[2]?.[0], XBoxButton.RIGHT)}
+								${this.#renderButton(
+									store.question[1]?.[answersIndex],
+									XBoxButton.LEFT,
+								)}
+								${this.#renderButton(
+									store.question[2]?.[answersIndex],
+									XBoxButton.RIGHT,
+								)}
 							</div>
 							<div>
-								${this.#renderButton(store.question[3]?.[0], XBoxButton.DOWN)}
+								${this.#renderButton(
+									store.question[3]?.[answersIndex],
+									XBoxButton.DOWN,
+								)}
 							</div>
 						</div>
 					`

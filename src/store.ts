@@ -1,13 +1,11 @@
 import {ReactiveController, state} from '@snar/lit';
 import {saveToLocalStorage} from 'snar-save-to-local-storage';
-import {generateHash, shuffleArray} from './utils.js';
 import {
 	playShuffleAudio,
 	playSuccessAudio,
 	playWrongAudio,
 } from './assets/assets.js';
-import {hasSomeJapanese} from 'asian-regexps';
-import {playJapanese, speakFrench} from '@vdegenne/speech';
+import {generateHash, playAudio, shuffleArray} from './utils.js';
 
 export enum State {
 	NODATA,
@@ -30,6 +28,8 @@ export class AppStore extends ReactiveController {
 	@state() answer: Entry | null = null;
 	@state() otherChoices: Entry[] = [];
 	@state() question: Entry[] = [];
+	@state() speakQuestion = true;
+	@state() reverseMode = false;
 
 	async firstUpdated() {
 		const hash = window.location.hash.slice(1);
@@ -91,18 +91,20 @@ export class AppStore extends ReactiveController {
 
 		this.question = finalQuestion;
 
-		speakFrench(this.answer[1]);
+		if (this.speakQuestion) {
+			const questionWord = this.reverseMode ? this.answer[0] : this.answer[1];
+			playAudio(questionWord);
+		}
 	};
 
-	checkAnswer(answer: string) {
-		if (answer === this.answer[0]) {
+	checkAnswer(input: string) {
+		const answer = this.reverseMode ? this.answer[1] : this.answer[0];
+		if (input === answer) {
 			if (this.state !== State.ANSWER) {
 				playSuccessAudio();
 				this.state = State.ANSWER;
 			}
-			if (hasSomeJapanese(answer)) {
-				playJapanese(answer);
-			}
+			playAudio(input);
 		} else {
 			playWrongAudio();
 		}

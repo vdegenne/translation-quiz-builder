@@ -4,13 +4,18 @@ import {customElement} from 'custom-element-decorator';
 import {LitElement, html} from 'lit';
 import {withStyles} from 'lit-with-styles';
 import {query, state} from 'lit/decorators.js';
+import {FormBuilder} from '../forms/FormBuilder.js';
+import {store} from '../store.js';
 import {themeStore} from '../styles/styles.js';
 import {renderThemeElements} from '../styles/theme-elements.js';
 import styles from './settings-dialog.css?inline';
 
+let F = new FormBuilder(store);
+
 @customElement({name: 'settings-dialog', inject: true})
 @withStyles(styles)
 @withController(themeStore)
+@withController(store)
 class SettingsDialog extends LitElement {
 	@state() open = false;
 
@@ -24,8 +29,24 @@ class SettingsDialog extends LitElement {
 					Settings
 				</header>
 
-				<form slot="content" method="dialog" id="form">
-					${renderThemeElements()}
+				<form
+					slot="content"
+					method="dialog"
+					id="form"
+					class="flex flex-col gap-9"
+				>
+					<md-list
+						class="p-0"
+						style="--forms-switch-padding:0;--md-list-item-one-line-container-height:0"
+					>
+						${F.SWITCH('Reverse mode', 'reverseMode')}
+						${F.SWITCH('Speak question', 'reverseMode')}
+					</md-list>
+
+					<div class="mb-5">
+						<p>Theme</p>
+						${renderThemeElements()}
+					</div>
 				</form>
 
 				<div slot="actions">
