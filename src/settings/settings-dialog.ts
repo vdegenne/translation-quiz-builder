@@ -35,12 +35,9 @@ class SettingsDialog extends LitElement {
 					id="form"
 					class="flex flex-col gap-9"
 				>
-					<md-list
-						class="p-0"
-						style="--forms-switch-padding:0;--md-list-item-one-line-container-height:0"
-					>
+					<md-list class="p-0" style="--forms-switch-padding:initial">
 						${F.SWITCH('Reverse mode', 'reverseMode')}
-						${F.SWITCH('Speak question', 'reverseMode')}
+						${F.SWITCH('Speak question', 'speakQuestion')}
 					</md-list>
 
 					<div class="mb-5">

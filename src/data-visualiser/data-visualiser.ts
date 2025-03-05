@@ -38,7 +38,7 @@ export class DataVisualiser extends LitElement {
 					<md-list>
 						${Object.entries(store.data).map((entry: Entry) => {
 							return html`<md-list-item>
-								<div slot="headline" class="text-xl">${entry[0]}</div>
+								<div slot="headline" class="text-xl" jp>${entry[0]}</div>
 								<div slot="overline">${entry[1]}</div>
 							</md-list-item>`;
 						})}

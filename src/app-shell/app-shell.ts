@@ -10,6 +10,8 @@ import {materialShellLoadingOff} from 'material-shell';
 import {openDataVisualiserDialog, openSettingsDialog} from '../imports.js';
 import {State, store} from '../store.js';
 import styles from './app-shell.css?inline';
+import {hasSomeJapanese} from 'asian-regexps';
+import {classMap} from 'lit/directives/class-map.js';
 
 declare global {
 	interface Window {
@@ -56,7 +58,10 @@ export class AppShell extends LitElement {
 								<md-icon>settings</md-icon>
 							</md-icon-button>
 						</header>
-						<div class="flex items-center justify-center m-16 mb-24 text-3xl">
+						<div
+							class="flex items-center justify-center m-16 mb-24 text-3xl"
+							?jp=${hasSomeJapanese(store.answer[questionIndex])}
+						>
 							${store.answer[questionIndex]}
 						</div>
 
@@ -109,10 +114,16 @@ export class AppShell extends LitElement {
 				? 'var(--md-sys-color-primary-container)'
 				: 'inherit',
 		});
+		const hasJap = hasSomeJapanese(answer);
+		const classes = classMap({
+			'text-2xl': !hasJap,
+			'font-light': !hasJap,
+			'text-3xl': hasJap,
+		});
 		return html`<!-- -->
 			<md-filled-tonal-button
-				jp
-				class="text-3xl"
+				?jp=${hasSomeJapanese(answer)}
+				class="${classes}"
 				style=${style}
 				@click=${() => store.checkAnswer(answer)}
 				gp-button=${ifDefined(gamepadButton)}
