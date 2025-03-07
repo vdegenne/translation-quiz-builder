@@ -42,7 +42,7 @@ export class HistoryDialog extends LitElement {
 				<form slot="content" method="dialog" id="form">
 					${store.dataHistory.length === 0 ? nothingYet() : null}
 					<md-list>
-						${store.dataHistory.map((history) => {
+						${[...store.dataHistory].reverse().map((history) => {
 							return html`
 								<md-list-item
 									href="#${JSON.stringify(history.data)}"
