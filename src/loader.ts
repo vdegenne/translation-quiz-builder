@@ -15,4 +15,6 @@ import './global-listeners.js';
 
 import './gamepad.js';
 
-app.updateComplete.then(() => {});
+app.updateComplete.then(() => {
+	// openHistoryDialog();
+});

@@ -17,30 +17,33 @@ export enum State {
 }
 
 export type Entry = [string, string];
+export type EntryData = Record<string, string>;
 
 @saveToLocalStorage('translation-quiz-builder:store')
 export class AppStore extends ReactiveController {
 	@state() state: State = State.NODATA;
 	@state() realHash = '';
 	@state() hashData = '';
-	@state() data: Record<string, string> = {};
+	@state() data: EntryData = {};
 	@state() bag: Entry[] = [];
 	@state() answer: Entry | null = null;
 	@state() otherChoices: Entry[] = [];
 	@state() question: Entry[] = [];
 	@state() speakQuestion = true;
 	@state() reverseMode = false;
+	@state() dataHistory: {hash: string; data: EntryData}[] = [];
 
 	async firstUpdated() {
-		const hash = window.location.hash.slice(1);
+		const hash = decodeURIComponent(window.location.hash.slice(1));
 		if (hash) {
 			const realHash = await generateHash(hash);
+			this.data = JSON.parse(hash);
+			this.addToHistory(realHash, this.data);
 			if (realHash !== this.realHash) {
 				this.state = State.LOADING;
 				this.realHash = realHash;
 				this.hashData = hash;
 				try {
-					this.data = JSON.parse(decodeURIComponent(hash));
 					if (Object.keys(this.data).length === 0) {
 						this.state = State.NOQUESTION;
 						return;
@@ -52,6 +55,18 @@ export class AppStore extends ReactiveController {
 				this.fillBagAndShuffle();
 				this.newQuestion();
 			}
+		}
+	}
+
+	addToHistory(hash: string, data: EntryData) {
+		if (!this.dataHistory.some((item) => item.hash === hash)) {
+			this.dataHistory = [...this.dataHistory, {hash, data}];
+		}
+	}
+	removeFromHistory(hash: string) {
+		const index = this.dataHistory.findIndex((i) => i.hash === hash);
+		if (index >= 0) {
+			this.dataHistory = this.dataHistory.filter((_, i) => i != index);
 		}
 	}
 

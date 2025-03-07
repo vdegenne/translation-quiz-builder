@@ -1,0 +1,4 @@
+md-dialog {
+	max-width: min(500px, calc(100vw - 24px));
+	width: 100%;
+}

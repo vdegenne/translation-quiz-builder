@@ -7,7 +7,11 @@ import {customElement, query} from 'lit/decorators.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {materialShellLoadingOff} from 'material-shell';
-import {openDataVisualiserDialog, openSettingsDialog} from '../imports.js';
+import {
+	openDataVisualiserDialog,
+	openHistoryDialog,
+	openSettingsDialog,
+} from '../imports.js';
 import {State, store} from '../store.js';
 import styles from './app-shell.css?inline';
 import {hasSomeJapanese} from 'asian-regexps';
@@ -51,6 +55,9 @@ export class AppShell extends LitElement {
 				? html`
 						<header class="flex m-4 gap-4">
 							<div class="flex-1"></div>
+							<md-icon-button @click=${openHistoryDialog}>
+								<md-icon>history</md-icon>
+							</md-icon-button>
 							<md-icon-button @click=${openDataVisualiserDialog}>
 								<md-icon>database</md-icon>
 							</md-icon-button>

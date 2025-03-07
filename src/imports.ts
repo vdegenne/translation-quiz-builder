@@ -21,3 +21,12 @@ export async function openDataVisualiserDialog() {
 	const dialog = await getDataVisualiserDialog();
 	dialog.show();
 }
+
+export async function getHistoryDialog() {
+	const {historyDialog} = await import('./history/history-dialog.js');
+	return historyDialog;
+}
+export async function openHistoryDialog() {
+	const dialog = await getHistoryDialog();
+	dialog.show();
+}
