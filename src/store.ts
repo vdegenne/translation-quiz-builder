@@ -30,6 +30,7 @@ export class AppStore extends ReactiveController {
 	@state() otherChoices: Entry[] = [];
 	@state() question: Entry[] = [];
 	@state() speakQuestion = true;
+	@state() speakAnswer = false;
 	@state() reverseMode = false;
 	@state() dataHistory: {hash: string; data: EntryData}[] = [];
 
@@ -119,7 +120,9 @@ export class AppStore extends ReactiveController {
 				playSuccessAudio();
 				this.state = State.ANSWER;
 			}
-			playAudio(input);
+			if (this.speakAnswer) {
+				playAudio(input);
+			}
 		} else {
 			playWrongAudio();
 		}

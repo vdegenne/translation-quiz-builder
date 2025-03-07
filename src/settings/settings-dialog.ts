@@ -38,6 +38,7 @@ class SettingsDialog extends LitElement {
 					<md-list class="p-0" style="--forms-switch-padding:initial">
 						${F.SWITCH('Reverse mode', 'reverseMode')}
 						${F.SWITCH('Speak question', 'speakQuestion')}
+						${F.SWITCH('Speak answer', 'speakAnswer')}
 					</md-list>
 
 					<div class="mb-5">
