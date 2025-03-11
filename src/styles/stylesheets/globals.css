@@ -3,12 +3,12 @@
 
 :root {
 	/* --md-icon-font: 'Material Symbols Rounded'; */
-	--md-list-container-color: transparent;
+	--md-list-container-color: var(--md-sys-color-surface);
 
 	/** when using material shell this will replace the default
    * which is `--md-sys-color-surface-container` on the :root
    */
-	background-color: var(--md-sys-color-surface);
+	background-color: var(--md-sys-color-surface-container);
 }
 
 body {

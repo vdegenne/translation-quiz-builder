@@ -99,6 +99,16 @@ export class AppShell extends LitElement {
 					`
 				: null}
 
+			<md-list class="m-4 mt-56">
+				${store.history.map(
+					(item) => html`
+						<md-list-item>
+							<div slot="headline" jp class="text-xl">${item[0]}</div>
+							<div slot="supporting-text">${item[1]}</div>
+						</md-list-item>
+					`,
+				)}
+			</md-list>
 			<md-fab
 				size="large"
 				class="fixed bottom-12 right-12"

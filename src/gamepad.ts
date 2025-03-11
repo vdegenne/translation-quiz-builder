@@ -1,4 +1,4 @@
-import {googleImagesOpen, jishoOpen} from '@vdegenne/links';
+import {googleImagesOpen, jishoOpen, weblioOpen} from '@vdegenne/links';
 import {playJapanese} from '@vdegenne/speech';
 import gamectrl, {
 	getMode,
@@ -110,6 +110,18 @@ gamectrl.on('connect', async (gamepad) => {
 			switch (mode) {
 				case Modes.NORMAL:
 					store.newQuestion();
+					break;
+			}
+		}),
+	);
+
+	gamepad.before(
+		XBoxButton.DPAD_LEFT,
+		guard(() => {
+			const mode = getMode();
+			switch (mode) {
+				case Modes.NORMAL:
+					weblioOpen(app.selectedItemContent);
 					break;
 			}
 		}),

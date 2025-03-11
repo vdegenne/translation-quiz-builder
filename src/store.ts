@@ -5,7 +5,7 @@ import {
 	playSuccessAudio,
 	playWrongAudio,
 } from './assets/assets.js';
-import {generateHash, playAudio, shuffleArray} from './utils.js';
+import {generateHash, playAudio, shuffleArray, sleep} from './utils.js';
 
 export enum State {
 	NODATA,
@@ -33,6 +33,10 @@ export class AppStore extends ReactiveController {
 	@state() speakAnswer = false;
 	@state() reverseMode = false;
 	@state() dataHistory: {hash: string; data: EntryData}[] = [];
+	/**
+	 * Current entry history
+	 */
+	@state() history: Entry[] = [];
 
 	async firstUpdated() {
 		const hash = decodeURIComponent(window.location.hash.slice(1));
@@ -53,6 +57,7 @@ export class AppStore extends ReactiveController {
 					this.state = State.ERROR;
 					return;
 				}
+				this.history = Object.entries(this.data);
 				this.fillBagAndShuffle();
 				this.newQuestion();
 			}
@@ -78,10 +83,17 @@ export class AppStore extends ReactiveController {
 		this.bag = bag;
 	}
 
-	newQuestion = () => {
+	newQuestion = async () => {
 		this.state = State.QUESTION;
 		if (this.bag.length === 0) {
 			this.fillBagAndShuffle();
+		}
+		if (this.answer) {
+			this.history.splice(
+				this.history.findIndex((e) => e[0] === this.answer[0]) >>> 0,
+				1,
+			);
+			this.history = [this.answer, ...this.history];
 		}
 
 		// Pick an (answer) in the bag
@@ -109,6 +121,7 @@ export class AppStore extends ReactiveController {
 
 		if (this.speakQuestion) {
 			const questionWord = this.reverseMode ? this.answer[0] : this.answer[1];
+			await sleep(200);
 			playAudio(questionWord);
 		}
 	};
