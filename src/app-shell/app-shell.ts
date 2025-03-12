@@ -110,6 +110,7 @@ export class AppShell extends LitElement {
 				)}
 			</md-list>
 			<md-fab
+				variant="tertiary"
 				size="large"
 				class="fixed bottom-12 right-12"
 				@click=${store.newQuestion}
@@ -129,7 +130,10 @@ export class AppShell extends LitElement {
 		const style = styleMap({
 			'--md-filled-tonal-button-icon-size': '24px',
 			'--md-sys-color-secondary-container': goodAnswer
-				? 'var(--md-sys-color-primary-container)'
+				? 'var(--md-sys-color-primary)'
+				: 'inherit',
+			'--md-sys-color-on-secondary-container': goodAnswer
+				? 'var(--md-sys-color-on-primary)'
 				: 'inherit',
 		});
 		const hasJap = hasSomeJapanese(answer);
